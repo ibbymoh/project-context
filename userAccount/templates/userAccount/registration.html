@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+
+    {% load crispy_forms_tags %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% load static %}
+
+<link href="{% static 'userAccount/style.css' %}" rel="stylesheet"/>
+</head>
+<body class="bg-white">
+
+<nav class="navbar">
+    <div class="container-fluid justify-content-center">
+        <nav class="navbar navbar-white bg-white me-auto">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'userAccount/logo.png' %}" width="130" height="130" class="d-inline-block" alt="">
+            </a>
+        </nav>
+    </div>
+</nav>
+
+
+<div class="container h-100">
+  <div class="row h-100 justify-content-center align-items-center">
+    <div class="col-10 col-md-8 col-lg-6">
+  <form action ="" method="post">
+
+    {% csrf_token %}
+      <div class="form-row">
+        <div class="form-group">
+            {{ form.email|as_crispy_field }}
+        </div>
+      </div>
+
+
+      <div class="form-row ">
+        <div class="form-group">
+            {{ form.name|as_crispy_field }}
+        </div>
+      </div>
+
+      <div class="form-row ">
+        <div class="form-group">
+            {{ form.password1|as_crispy_field }}
+        </div>
+      </div>
+
+      <div class="form-row ">
+        <div class="form-group">
+            {{ form.password2|as_crispy_field }}
+        </div>
+      </div>
+        <input type="submit" value="Create Account " class="btn btn-success w-100">
+
+
+
+  </form>
+
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+</body>
+
+</html>
