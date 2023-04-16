@@ -48,7 +48,7 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = 'userAccount.User'
 LOGIN_URL = 'login'
-STATIC_URL = 'readingFunctionality/static/'
+STATIC_URL = '/static/'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 OPENAI_API_KEY = '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'
 MEDIA_URL = '/media/'
