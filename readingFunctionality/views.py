@@ -13,7 +13,7 @@ import pytesseract
 from pdf2image import convert_from_path, convert_from_bytes
 from django.conf import settings
 import openai
-from boto.s3.connection import S3Connection
+
 
 # Create your views here.
 
