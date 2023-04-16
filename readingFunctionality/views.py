@@ -17,7 +17,7 @@ import openai
 # Create your views here.
 
 poppler_path = r"C:\Users\User\Downloads\Release-23.01.0-0\poppler-23.01.0\Library\bin"
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+# pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 def home(request):
     return render(request,'readingFunctionality/home.html')
