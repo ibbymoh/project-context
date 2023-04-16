@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-p!d(-p*abd6i#(vp2zcfi42q0atr63f960-am-)3ni)m-ld64o'
+SECRET_KEY = 'django-insecure-p!d(-p*abd6i#(vp2zcfi42q0atr63f960-am-)3ni)m-ld64o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -52,7 +52,7 @@ STATIC_URL = '/static/'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 OPENAI_API_KEY = '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'
 MEDIA_URL = '/media/'
-
+CSRF_TRUSTED_ORIGINS = ["https://radiant-beach-40282.herokuapp.com"]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MIDDLEWARE = [
