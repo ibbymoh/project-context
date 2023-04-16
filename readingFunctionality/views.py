@@ -1,5 +1,5 @@
 import json
-
+import os
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView, LogoutView
@@ -13,6 +13,7 @@ import pytesseract
 from pdf2image import convert_from_path, convert_from_bytes
 from django.conf import settings
 import openai
+from boto.s3.connection import S3Connection
 
 # Create your views here.
 
@@ -27,7 +28,7 @@ def home(request):
 def fileChange(request):
     if request.method == "POST":
         file = request.FILES['file']
-        images = convert_from_bytes(file.read(), POPPLER_PATH)
+        images = convert_from_bytes(file.read(), poppler_path=os.getenv("POPPLER_PATH"))
         # Extract text from image
         ocr_text = pytesseract.image_to_string(images[0])
         array = ocr_text.split()
