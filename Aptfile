@@ -1,4 +1,5 @@
 
 tesseract-ocr
 tesseract-ocr-eng
-build-essential libpoppler-cpp-dev pkg-config python3-dev
+libpng-dev
+poppler-utils
