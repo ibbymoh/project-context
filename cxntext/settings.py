@@ -52,8 +52,8 @@ STATIC_URL = 'readingFunctionality/static/'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 OPENAI_API_KEY = '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'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -140,4 +140,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 import django_on_heroku
-django_heroku.settings(locals())
+django_on_heroku.settings(locals())
