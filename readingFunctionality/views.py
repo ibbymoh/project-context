@@ -27,7 +27,7 @@ def home(request):
 def fileChange(request):
     if request.method == "POST":
         file = request.FILES['file']
-        images = convert_from_bytes(file.read(), poppler_path=poppler_path)
+        images = convert_from_bytes(file.read(), POPPLER_PATH)
         # Extract text from image
         ocr_text = pytesseract.image_to_string(images[0])
         array = ocr_text.split()
