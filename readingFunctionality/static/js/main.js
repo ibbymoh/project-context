@@ -17,18 +17,17 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-#####
+
+///////
 $('#actual-btn').change(function() {
 
     var selectedFile = document.getElementById("actual-btn").files[0]
     var name = selectedFile.name
 
     $('#uploadButton').text(name)
-
     var fd = new FormData();
-
     fd.append('file', selectedFile);
-    fd.append('page_number',0);
+//    fd.append('page_number',0);
 
     const csrftoken = getCookie('csrftoken')
     $.ajax(
@@ -60,8 +59,9 @@ $('#actual-btn').change(function() {
 
     })
 });
-    #####
 
+
+//    #####
     $('#textSection').on('click','.textButton', function(event) {
         chosen_word = ($(event.currentTarget).text())
         $('#word').text(chosen_word)
@@ -82,7 +82,7 @@ $('#actual-btn').change(function() {
 
     });
 
-    #######
+//    #######
 
     $('#pageNumber').keyup(function() {
 

@@ -22,6 +22,7 @@ import openai
 pytesseract.pytesseract.tesseract_cmd = os.getenv("TESSDATA_PREFIX")
 poppler_path = os.getenv("POPPLER_PATH")
 
+
 def home(request):
     return render(request,'readingFunctionality/home.html')
 
@@ -30,10 +31,10 @@ def home(request):
 def fileChange(request):
     if request.method == "POST":
         file = request.FILES['file']
-        page_number = request.FILES('page_number')
+        # page_number = request.FILES('page_number')
         images = convert_from_bytes(file.read(), poppler_path=poppler_path)
         # Extract text from image
-        ocr_text = pytesseract.image_to_string(images[int(page_number)])
+        ocr_text = pytesseract.image_to_string(images[int(0)])
         array = ocr_text.split()
         return JsonResponse({"alpha":ocr_text})
 
