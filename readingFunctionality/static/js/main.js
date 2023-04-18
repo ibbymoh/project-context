@@ -17,18 +17,19 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
+#####
 $('#actual-btn').change(function() {
 
     var selectedFile = document.getElementById("actual-btn").files[0]
     var name = selectedFile.name
-    var size = selectedFile.size
-    var type = selectedFile.type
 
     $('#uploadButton').text(name)
 
     var fd = new FormData();
-    fd.append( 'file', selectedFile);
+
+    fd.append('file', selectedFile);
+    fd.append('page_number',0);
+
     const csrftoken = getCookie('csrftoken')
     $.ajax(
     {
@@ -59,8 +60,9 @@ $('#actual-btn').change(function() {
 
     })
 });
+    #####
 
- $('#textSection').on('click','.textButton', function(event) {
+    $('#textSection').on('click','.textButton', function(event) {
         chosen_word = ($(event.currentTarget).text())
         $('#word').text(chosen_word)
 
@@ -79,6 +81,50 @@ $('#actual-btn').change(function() {
         })
 
     });
+
+    #######
+
+    $('#pageNumber').keyup(function() {
+
+    chosen_page = ($(event.currentTarget).text())
+    var selectedFile = document.getElementById("actual-btn").files[0]
+
+
+    var fd = new FormData();
+    fd.append('file', selectedFile);
+    fd.append('page_number',chosen_page)
+    const csrftoken = getCookie('csrftoken')
+
+    $.ajax(
+    {
+    type:"POST",
+    url:"fileChange",
+    headers: {'X-CSRFToken': csrftoken},
+    data: fd,
+    cache: false,
+    contentType: 'multipart/form-data',
+    processData: false,
+    contentType: false,
+    success: function(data) {
+
+    $('#textSection').val("");
+
+
+    const myArray = data["alpha"].split(" ")
+    for (let i = 0; i < myArray.length; i++) {
+        $('#textSection').append(`<button type='button' class='textButton'>${myArray[i]}</button>`)
+        $('#textSection').append(" ")
+        }
+
+    $('.textButton').addClass('btn btn-light')
+    }
+
+
+    })
+
+
+
+    })
 
 
 

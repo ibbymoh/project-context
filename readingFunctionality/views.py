@@ -17,11 +17,10 @@ import openai
 
 # Create your views here.
 
-# poppler_path = r"C:\Users\User\Downloads\Release-23.01.0-0\poppler-23.01.0\Library\bin"
 # pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-
 # poppler_path = r"C:\Users\User\Downloads\Release-23.01.0-0\poppler-23.01.0\Library\bin"
 pytesseract.pytesseract.tesseract_cmd = os.getenv("TESSDATA_PREFIX")
+poppler_path = os.getenv("POPPLER_PATH")
 
 def home(request):
     return render(request,'readingFunctionality/home.html')
@@ -31,9 +30,10 @@ def home(request):
 def fileChange(request):
     if request.method == "POST":
         file = request.FILES['file']
-        images = convert_from_bytes(file.read(10), poppler_path=os.getenv("POPPLER_PATH"))
+        page_number = request.FILES('page_number')
+        images = convert_from_bytes(file.read(), poppler_path=poppler_path)
         # Extract text from image
-        ocr_text = pytesseract.image_to_string(images[0])
+        ocr_text = pytesseract.image_to_string(images[int(page_number)])
         array = ocr_text.split()
         return JsonResponse({"alpha":ocr_text})
 
