@@ -4,14 +4,16 @@
 
 {% block content %}
 
+
 <div class="container h-100 align-items-center">
+    <h3> Note: this currently only support arabic text < 10 pages in length</h3>
   <div class="row">
     <div class="col-md-3 no-float ">
       <div class="row" id="upload-section">
-<!--        <button type="button" class="btn btn-dark" id="uploadButton">Upload file</button>-->
         <input type="file" id="actual-btn" hidden />
           {% csrf_token %}
         <label for="actual-btn" id="uploadButton" class="btn btn-dark">Upload</label>
+
 
 
       </div>

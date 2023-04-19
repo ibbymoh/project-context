@@ -26,14 +26,13 @@ def home(request):
     return render(request,'readingFunctionality/home.html')
 
 
-
 def fileChange(request):
     if request.method == "POST":
         file = request.FILES['file']
         page_number = request.POST.get('pageNumber')
         images = convert_from_bytes(file.read(), poppler_path=poppler_path)
         # Extract text from image
-        ocr_text = pytesseract.image_to_string(images[int(page_number)])
+        ocr_text = pytesseract.image_to_string(images[int(page_number)], lang='ara')
         array = ocr_text.split()
         return JsonResponse({"alpha":ocr_text})
 
@@ -51,7 +50,7 @@ def translate(request):
                 },
                 {
                     "role": "user",
-                    "content": f"explain the meaning of this word: {my_word}",
+                    "content": f" This is a word in arabic,explain the meaning of this word and give 3 examples of it context: {my_word}",
                 },
             ]
         )
