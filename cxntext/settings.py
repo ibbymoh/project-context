@@ -53,6 +53,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 OPENAI_API_KEY = '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'
 MEDIA_URL = '/media/'
 CSRF_TRUSTED_ORIGINS = ["https://radiant-beach-40282.herokuapp.com"]
+CSRF_TRUSTED_ORIGINS = ["https://www.cxntext.com"]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MIDDLEWARE = [
