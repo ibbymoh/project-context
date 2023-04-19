@@ -30,10 +30,10 @@ def home(request):
 def fileChange(request):
     if request.method == "POST":
         file = request.FILES['file']
-        # page_number = request.FILES('page_number')
+        page_number = request.POST.get('pageNumber')
         images = convert_from_bytes(file.read(), poppler_path=poppler_path)
         # Extract text from image
-        ocr_text = pytesseract.image_to_string(images[int(0)])
+        ocr_text = pytesseract.image_to_string(images[int(page_number)])
         array = ocr_text.split()
         return JsonResponse({"alpha":ocr_text})
 

@@ -26,8 +26,9 @@ $('#actual-btn').change(function() {
 
     $('#uploadButton').text(name)
     var fd = new FormData();
+
     fd.append('file', selectedFile);
-//    fd.append('page_number',0);
+    fd.append('pageNumber',0);
 
     const csrftoken = getCookie('csrftoken')
     $.ajax(
@@ -37,9 +38,8 @@ $('#actual-btn').change(function() {
     headers: {'X-CSRFToken': csrftoken},
     data: fd,
     cache: false,
-    contentType: 'multipart/form-data',
-    processData: false,
     contentType: false,
+    processData: false,
     success: function(data) {
 
     $('#textSection').val("");
@@ -84,45 +84,50 @@ $('#actual-btn').change(function() {
 
 //    #######
 
-    $('#pageNumber').keyup(function() {
+$('#pageNumber').keyup(function(event) {
 
-    chosen_page = ($(event.currentTarget).text())
-    var selectedFile = document.getElementById("actual-btn").files[0]
+    $('.textButton').remove();
+    chosen_page = Number($(event.currentTarget).val())
+    if (Number.isInteger(chosen_page) && chosen_page >= 0) {
+
+        var selectedFile = document.getElementById("actual-btn").files[0]
+
+        var fd1 = new FormData();
+        fd1.append('file', selectedFile);
+        fd1.append('pageNumber',chosen_page)
+        const csrftoken = getCookie('csrftoken')
+
+        $.ajax(
+        {
+        type:"POST",
+        url:"fileChange",
+        headers: {'X-CSRFToken': csrftoken},
+        data: fd1,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+
+        $('#textSection').val("");
 
 
-    var fd = new FormData();
-    fd.append('file', selectedFile);
-    fd.append('page_number',chosen_page)
-    const csrftoken = getCookie('csrftoken')
+        const myArray = data["alpha"].split(" ")
+        for (let i = 0; i < myArray.length; i++) {
+            $('#textSection').append(`<button type='button' class='textButton'>${myArray[i]}</button>`)
+            $('#textSection').append(" ")
+            }
 
-    $.ajax(
-    {
-    type:"POST",
-    url:"fileChange",
-    headers: {'X-CSRFToken': csrftoken},
-    data: fd,
-    cache: false,
-    contentType: 'multipart/form-data',
-    processData: false,
-    contentType: false,
-    success: function(data) {
-
-    $('#textSection').val("");
-
-
-    const myArray = data["alpha"].split(" ")
-    for (let i = 0; i < myArray.length; i++) {
-        $('#textSection').append(`<button type='button' class='textButton'>${myArray[i]}</button>`)
-        $('#textSection').append(" ")
+        $('.textButton').addClass('btn btn-light')
         }
 
-    $('.textButton').addClass('btn btn-light')
+
+        })
+
+    } else {
+
+    alert("please enter a valid page number")
+
     }
-
-
-    })
-
-
 
     })
 
