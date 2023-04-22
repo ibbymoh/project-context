@@ -1,3 +1,4 @@
+import io
 import json
 import os
 from django.shortcuts import render
@@ -8,7 +9,7 @@ from django.contrib import messages
 from django.urls import reverse,reverse_lazy
 from django.http import HttpResponseRedirect,HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_protect
-from PyPDF2 import PdfReader
+from PyPDF2 import PdfReader, PdfWriter
 import pytesseract
 from pdf2image import convert_from_path, convert_from_bytes
 from django.conf import settings
@@ -30,11 +31,19 @@ def fileChange(request):
     if request.method == "POST":
         file = request.FILES['file']
         page_number = request.POST.get('pageNumber')
-        images = convert_from_bytes(file.read(), poppler_path=poppler_path)
+        pdf_reader = PdfReader(file)
+        pdf_writer = PdfWriter()
+        page = pdf_reader.pages[int(page_number)-1]
+        pdf_writer.add_page(page)
+        buf = io.BytesIO()
+        pdf_writer.write(buf)
+        buf.seek(0)
+        # pdf_writer.write()
+        images = convert_from_bytes(buf.read(), poppler_path=poppler_path)
         # Extract text from image
-        ocr_text = pytesseract.image_to_string(images[int(page_number)], lang='ara')
+        ocr_text = pytesseract.image_to_string(images[0], lang='ara')
         array = ocr_text.split()
-        return JsonResponse({"alpha":ocr_text})
+        return JsonResponse({"alpha":array})
 
 def translate(request):
     if request.method == "GET":

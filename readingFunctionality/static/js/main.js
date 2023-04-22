@@ -17,47 +17,47 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
 ///////
 $('#actual-btn').change(function() {
-
+    $('.textButton').remove();
+    $('#textSection').empty()
     var selectedFile = document.getElementById("actual-btn").files[0]
     var name = selectedFile.name
 
     $('#uploadButton').text(name)
-    var fd = new FormData();
 
-    fd.append('file', selectedFile);
-    fd.append('pageNumber',0);
+//    var fd = new FormData();
+//    fd.append('file', selectedFile);
+//    fd.append('pageNumber',0);
 
-    const csrftoken = getCookie('csrftoken')
-    $.ajax(
-    {
-    type:"POST",
-    url:"fileChange",
-    headers: {'X-CSRFToken': csrftoken},
-    data: fd,
-    cache: false,
-    contentType: false,
-    processData: false,
-    success: function(data) {
+//    const csrftoken = getCookie('csrftoken')
+//    $.ajax(
+//    {
+//    type:"POST",
+//    url:"fileChange",
+//    headers: {'X-CSRFToken': csrftoken},
+//    data: fd,
+//    cache: false,
+//    contentType: false,
+//    processData: false,
+//    success: function(data) {
+//
+//    $('#textSection').val("");
 
-    $('#textSection').val("");
-
-
-    const myArray = data["alpha"].split(" ")
-    for (let i = 0; i < myArray.length; i++) {
-        $('#textSection').append(`<button type='button' class='textButton'>${myArray[i]}</button>`)
-        $('#textSection').append(" ")
-        }
-
-    $('.textButton').addClass('btn btn-light')
-    }
-
-
+//
+//    const myArray = data["alpha"].split(" ")
+//    for (let i = 0; i < myArray.length; i++) {
+//        $('#textSection').append(`<button type='button' class='textButton'>${myArray[i]}</button>`)
+//        $('#textSection').append(" ")
+//        }
+//
+//    $('.textButton').addClass('btn btn-light')
+//    }
 
 
-    })
+
+
+//    })
 });
 
 
@@ -84,11 +84,14 @@ $('#actual-btn').change(function() {
 
 //    #######
 
-$('#pageNumber').keyup(function(event) {
 
+
+$('#pageNumber').keyup(function(event) {
     $('.textButton').remove();
+    $('#textSection').empty()
     chosen_page = Number($(event.currentTarget).val())
-    if (Number.isInteger(chosen_page) && chosen_page >= 0) {
+
+    if (Number.isInteger(chosen_page) && chosen_page >= 1) {
 
         var selectedFile = document.getElementById("actual-btn").files[0]
 
@@ -108,10 +111,11 @@ $('#pageNumber').keyup(function(event) {
         contentType: false,
         success: function(data) {
 
-        $('#textSection').val("");
+//        $('#textSection').val("");
 
 
-        const myArray = data["alpha"].split(" ")
+        const myArray = data["alpha"]
+
         for (let i = 0; i < myArray.length; i++) {
             $('#textSection').append(`<button type='button' class='textButton'>${myArray[i]}</button>`)
             $('#textSection').append(" ")
@@ -122,6 +126,9 @@ $('#pageNumber').keyup(function(event) {
 
 
         })
+
+    } else if (Number.isInteger(chosen_page) && chosen_page == 0) {
+
 
     } else {
 
