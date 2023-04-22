@@ -21,6 +21,7 @@ function getCookie(name) {
 $('#actual-btn').change(function() {
     $('.textButton').remove();
     $('#textSection').empty()
+    $('#pageNumber').val("")
     var selectedFile = document.getElementById("actual-btn").files[0]
     var name = selectedFile.name
 
