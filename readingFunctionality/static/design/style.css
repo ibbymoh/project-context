@@ -93,3 +93,14 @@ border-radius: 40px;
     font-size: 30px;
     font-weight:bold;
   }
+
+#loadText {
+    margin-top: 30px;
+}
+
+#previousPage{
+    margin-top: 30px;
+}
+#nextPage {
+    margin-top: 30px;
+}

@@ -87,12 +87,73 @@ $('#actual-btn').change(function() {
 
 
 
-$('#pageNumber').keyup(function(event) {
+$('#loadText').click(function(event) {
     $('.textButton').remove();
     $('#textSection').empty()
-    chosen_page = Number($(event.currentTarget).val())
+    chosen_page = Number($('#pageNumber').val())
 
     if (Number.isInteger(chosen_page) && chosen_page >= 1) {
+        $('#pageNumber').css('background-color','white')
+
+        var selectedFile = document.getElementById("actual-btn").files[0]
+
+        var fd1 = new FormData();
+        fd1.append('file', selectedFile);
+        fd1.append('pageNumber',chosen_page)
+        const csrftoken = getCookie('csrftoken')
+
+        $.ajax(
+        {
+        type:"POST",
+        url:"fileChange",
+        headers: {'X-CSRFToken': csrftoken},
+        data: fd1,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+
+//        $('#textSection').val("");
+
+
+        const myArray = data["alpha"]
+
+        for (let i = 0; i < myArray.length; i++) {
+            $('#textSection').append(`<button type='button' class='textButton'>${myArray[i]}</button>`)
+            $('#textSection').append(" ")
+            }
+
+        $('.textButton').addClass('btn btn-light')
+        }
+
+
+        })
+
+    } else if ($('#pageNumber').val() == '') {
+
+    $('#pageNumber').css('background-color','red')
+
+    alert("please enter a page number")
+
+
+
+    } else {
+
+    alert("please enter a valid page number")
+
+    }
+
+    })
+
+//#####
+$('#previousPage').click(function(event) {
+    $('.textButton').remove();
+    $('#textSection').empty()
+    chosen_page = Number($('#pageNumber').val())
+
+    if (Number.isInteger(chosen_page) && chosen_page >= 2) {
+        chosen_page = chosen_page -1
+        $('#pageNumber').val(chosen_page)
 
         var selectedFile = document.getElementById("actual-btn").files[0]
 
@@ -138,6 +199,72 @@ $('#pageNumber').keyup(function(event) {
     }
 
     })
+
+//#####
+
+
+$('#nextPage').click(function(event) {
+    $('.textButton').remove();
+    $('#textSection').empty()
+    chosen_page = Number($('#pageNumber').val())
+
+    if (Number.isInteger(chosen_page) && chosen_page >= 1) {
+        chosen_page = chosen_page  + 1
+        $('#pageNumber').val(chosen_page)
+
+        var selectedFile = document.getElementById("actual-btn").files[0]
+
+        var fd1 = new FormData();
+        fd1.append('file', selectedFile);
+        fd1.append('pageNumber',chosen_page)
+        const csrftoken = getCookie('csrftoken')
+
+        $.ajax(
+        {
+        type:"POST",
+        url:"fileChange",
+        headers: {'X-CSRFToken': csrftoken},
+        data: fd1,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+
+//        $('#textSection').val("");
+
+
+        const myArray = data["alpha"]
+
+        for (let i = 0; i < myArray.length; i++) {
+            $('#textSection').append(`<button type='button' class='textButton'>${myArray[i]}</button>`)
+            $('#textSection').append(" ")
+            }
+
+        $('.textButton').addClass('btn btn-light')
+        },
+        error: function(date) {
+         alert("please enter a valid page number")
+
+        }
+
+
+        })
+
+    } else if (Number.isInteger(chosen_page) && chosen_page == 0) {
+
+
+    } else {
+
+    alert("This page number does not exist in the document uploaded")
+
+    }
+
+    })
+
+
+
+
+
 
 
 
