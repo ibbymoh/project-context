@@ -81,7 +81,6 @@ border-radius: 40px;
     margin-left: 10px;
     margin-right: 10px;
     overflow-y: scroll;
-    direction: rtl;
 
 }
 
@@ -90,8 +89,8 @@ border-radius: 40px;
     margin-right: 0px;
     margin-top: 5px;
     margin-bottom: 5px;
-    font-size: 30px;
-    font-weight:bold;
+    font-size: 20px;
+
   }
 
 #loadText {

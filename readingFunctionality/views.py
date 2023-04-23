@@ -31,6 +31,7 @@ def fileChange(request):
     if request.method == "POST":
         file = request.FILES['file']
         page_number = request.POST.get('pageNumber')
+        language = request.POST.get('language')
         pdf_reader = PdfReader(file)
         pdf_writer = PdfWriter()
         page = pdf_reader.pages[int(page_number)-1]
@@ -41,7 +42,11 @@ def fileChange(request):
         # pdf_writer.write()
         images = convert_from_bytes(buf.read(), poppler_path=poppler_path)
         # Extract text from image
-        ocr_text = pytesseract.image_to_string(images[0], lang='ara')
+        if language == "Arabic":
+            ocr_text = pytesseract.image_to_string(images[0], lang='ara')
+        elif language == "English":
+            ocr_text = pytesseract.image_to_string(images[0], lang='eng')
+
         array = ocr_text.split()
         return JsonResponse({"alpha":array})
 

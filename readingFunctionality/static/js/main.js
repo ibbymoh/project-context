@@ -27,38 +27,6 @@ $('#actual-btn').change(function() {
 
     $('#uploadButton').text(name)
 
-//    var fd = new FormData();
-//    fd.append('file', selectedFile);
-//    fd.append('pageNumber',0);
-
-//    const csrftoken = getCookie('csrftoken')
-//    $.ajax(
-//    {
-//    type:"POST",
-//    url:"fileChange",
-//    headers: {'X-CSRFToken': csrftoken},
-//    data: fd,
-//    cache: false,
-//    contentType: false,
-//    processData: false,
-//    success: function(data) {
-//
-//    $('#textSection').val("");
-
-//
-//    const myArray = data["alpha"].split(" ")
-//    for (let i = 0; i < myArray.length; i++) {
-//        $('#textSection').append(`<button type='button' class='textButton'>${myArray[i]}</button>`)
-//        $('#textSection').append(" ")
-//        }
-//
-//    $('.textButton').addClass('btn btn-light')
-//    }
-
-
-
-
-//    })
 });
 
 
@@ -91,30 +59,36 @@ $('#loadText').click(function(event) {
     $('.textButton').remove();
     $('#textSection').empty()
     chosen_page = Number($('#pageNumber').val())
-
+    language_choice = $('#language-choice').val()
     if (Number.isInteger(chosen_page) && chosen_page >= 1) {
         $('#pageNumber').css('background-color','white')
 
         var selectedFile = document.getElementById("actual-btn").files[0]
 
-        var fd1 = new FormData();
-        fd1.append('file', selectedFile);
-        fd1.append('pageNumber',chosen_page)
-        const csrftoken = getCookie('csrftoken')
+        var fd = new FormData();
+        fd.append('file', selectedFile);
+        fd.append('pageNumber',chosen_page)
+        fd.append('language',language_choice)
 
+        const csrftoken = getCookie('csrftoken')
         $.ajax(
         {
         type:"POST",
         url:"fileChange",
         headers: {'X-CSRFToken': csrftoken},
-        data: fd1,
+        data: fd,
         cache: false,
         processData: false,
         contentType: false,
         success: function(data) {
+           if (language_choice == "Arabic") {
 
-//        $('#textSection').val("");
+            $('#textSection').css('direction','rtl')
 
+            } else if (language_choice == "English") {
+
+            $('#textSection ').css('direction','ltr')
+        }
 
         const myArray = data["alpha"]
 
@@ -150,6 +124,7 @@ $('#previousPage').click(function(event) {
     $('.textButton').remove();
     $('#textSection').empty()
     chosen_page = Number($('#pageNumber').val())
+    language_choice = $('#language-choice'.val())
 
     if (Number.isInteger(chosen_page) && chosen_page >= 2) {
         chosen_page = chosen_page -1
@@ -158,8 +133,9 @@ $('#previousPage').click(function(event) {
         var selectedFile = document.getElementById("actual-btn").files[0]
 
         var fd1 = new FormData();
-        fd1.append('file', selectedFile);
-        fd1.append('pageNumber',chosen_page)
+        fd.append('file', selectedFile);
+        fd.append('pageNumber',chosen_page)
+        fd.append('language',language_choice)
         const csrftoken = getCookie('csrftoken')
 
         $.ajax(
@@ -167,16 +143,30 @@ $('#previousPage').click(function(event) {
         type:"POST",
         url:"fileChange",
         headers: {'X-CSRFToken': csrftoken},
-        data: fd1,
+        data: fd,
         cache: false,
         processData: false,
         contentType: false,
         success: function(data) {
 
-//        $('#textSection').val("");
+          if (language_choice == "Arabic") {
 
+            $('#textSection').css('direction','rtl')
+
+            } else if (language_choice == "English") {
+
+            $('#textSection ').css('direction','ltr')
+        }
 
         const myArray = data["alpha"]
+
+        if (language_choice == "Arabic") {
+            $('#textSection').css('direction','rtl')
+        } else if (language_choice == "Arabic") {
+            $('#textSection').css('direction','ltr')
+        }
+
+
 
         for (let i = 0; i < myArray.length; i++) {
             $('#textSection').append(`<button type='button' class='textButton'>${myArray[i]}</button>`)
@@ -207,6 +197,7 @@ $('#nextPage').click(function(event) {
     $('.textButton').remove();
     $('#textSection').empty()
     chosen_page = Number($('#pageNumber').val())
+    language_choice = $('#language-choice').val()
 
     if (Number.isInteger(chosen_page) && chosen_page >= 1) {
         chosen_page = chosen_page  + 1
@@ -214,9 +205,10 @@ $('#nextPage').click(function(event) {
 
         var selectedFile = document.getElementById("actual-btn").files[0]
 
-        var fd1 = new FormData();
-        fd1.append('file', selectedFile);
-        fd1.append('pageNumber',chosen_page)
+        var fd = new FormData();
+        fd.append('file', selectedFile);
+        fd.append('pageNumber',chosen_page)
+        fd.append('language',language_choice)
         const csrftoken = getCookie('csrftoken')
 
         $.ajax(
@@ -224,14 +216,20 @@ $('#nextPage').click(function(event) {
         type:"POST",
         url:"fileChange",
         headers: {'X-CSRFToken': csrftoken},
-        data: fd1,
+        data: fd,
         cache: false,
         processData: false,
         contentType: false,
         success: function(data) {
 
-//        $('#textSection').val("");
+          if (language_choice == "Arabic") {
 
+            $('#textSection').css('direction','rtl')
+
+            } else if (language_choice == "English") {
+
+            $('#textSection ').css('direction','ltr')
+        }
 
         const myArray = data["alpha"]
 
@@ -260,9 +258,6 @@ $('#nextPage').click(function(event) {
     }
 
     })
-
-
-
 
 
 
