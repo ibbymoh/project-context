@@ -75,12 +75,12 @@ border-radius: 40px;
 }
 
 #textSection {
-    border-color: grey;
-    border-style: solid;
-    border-radius: 5px;
+    border-color: #ccc;
     margin-left: 10px;
     margin-right: 10px;
     overflow-y: scroll;
+    border: 1px solid;
+    border-radius: 16px;
 
 }
 

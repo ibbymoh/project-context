@@ -21,11 +21,54 @@ function getCookie(name) {
 $('#actual-btn').change(function() {
     $('.textButton').remove();
     $('#textSection').empty()
-    $('#pageNumber').val("")
+    $('#pageNumber').val("1")
+    chosen_page = Number($('#pageNumber').val())
+    language_choice = $('#language-choice').val()
     var selectedFile = document.getElementById("actual-btn").files[0]
     var name = selectedFile.name
 
     $('#uploadButton').text(name)
+    $('#pageNumber').css('background-color','white')
+    var selectedFile = document.getElementById("actual-btn").files[0]
+    var fd = new FormData();
+    fd.append('file', selectedFile);
+    fd.append('pageNumber',chosen_page)
+    fd.append('language',language_choice)
+
+    const csrftoken = getCookie('csrftoken')
+    $.ajax(
+    {
+    type:"POST",
+    url:"fileChange",
+    headers: {'X-CSRFToken': csrftoken},
+    data: fd,
+    cache: false,
+    processData: false,
+    contentType: false,
+    success: function(data) {
+
+       if (language_choice == "Arabic") {
+
+        $('#textSection').css('direction','rtl')
+
+        } else if (language_choice == "English") {
+
+        $('#textSection ').css('direction','ltr')
+    }
+
+    const myArray = data["alpha"]
+
+    for (let i = 0; i < myArray.length; i++) {
+        $('#textSection').append(`<button type='button' class='textButton'>${myArray[i]}</button>`)
+        $('#textSection').append(" ")
+        }
+
+    $('.textButton').addClass('btn btn-light')
+    }
+
+
+    })
+
 
 });
 
