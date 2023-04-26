@@ -333,6 +333,15 @@ $('#nextPage').click(function(event) {
 $('#seperateText').click(function() {
     $('#tranformedText').empty()
 
+     if ( $('#language-choice-text-upload').val() == "Arabic") {
+
+        $('#tranformedText').css('direction','rtl');
+
+    } else {
+        $('#tranformedText').css('direction','ltr')
+
+    }
+
     my_text = $('#textInputSection').val().trim().split(" ")
 
     for (let i=0; i < my_text.length; i++ ) {
