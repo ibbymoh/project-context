@@ -78,11 +78,12 @@ $('#actual-btn').change(function() {
         chosen_word = ($(event.currentTarget).text())
         $('#word').text(chosen_word)
 
+
         $('#translation-of-Word').text('')
         $.ajax({
 
         type: 'GET',
-        url: 'get/translation',
+        url: 'upload-doc/get/translation',
         data: {"word-choice": chosen_word},
         success: function(response) {
         $('#translation-of-Word').text(response['answer'])
@@ -96,15 +97,16 @@ $('#actual-btn').change(function() {
 
     //###
 
-        $('#tranformedText').on('click','.textButton', function(event) {
-        chosen_word = ($(event.currentTarget).text())
+    $('#tranformedText').on('click','.textButton', function(event) {
+        chosen_word = $(event.currentTarget).text()
+        console.log(chosen_word)
         $('#word-to-translate').text(chosen_word)
-
+//
         $('#translation-text-upload').text('')
         $.ajax({
 
         type: 'GET',
-        url: 'get/translation',
+        url: 'upload-text/get/translation',
         data: {"word-choice": chosen_word},
         success: function(response) {
         $('#translation-text-upload').text(response['answer'])
@@ -326,6 +328,8 @@ $('#nextPage').click(function(event) {
     });
 
 
+//   ####
+
 $('#seperateText').click(function() {
     $('#tranformedText').empty()
 
@@ -344,7 +348,9 @@ $('#seperateText').click(function() {
 $('#resetTextButton').click(function() {
     $('#textInputSection').val('')
     $('#tranformedText').empty()
-})
+});
+
+
 
 
 });
