@@ -17,14 +17,21 @@ import openai
 
 
 # Create your views here.
-# pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-# poppler_path = r"C:\Users\User\Downloads\Release-23.01.0-0\poppler-23.01.0\Library\bin"
-pytesseract.pytesseract.tesseract_cmd = '/app/.apt/usr/bin/tesseract'
-poppler_path = os.getenv("POPPLER_PATH")
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+poppler_path = r"C:\Users\User\Downloads\Release-23.01.0-0\poppler-23.01.0\Library\bin"
+# pytesseract.pytesseract.tesseract_cmd = '/app/.apt/usr/bin/tesseract'
+# poppler_path = os.getenv("POPPLER_PATH")
 
 
 def home(request):
     return render(request,'readingFunctionality/home.html')
+
+def upload_text(request):
+    return render(request,'readingFunctionality/upload-text.html')
+
+
+def upload_doc(request):
+    return render(request,'readingFunctionality/upload-doc.html')
 
 
 def fileChange(request):
@@ -64,7 +71,7 @@ def translate(request):
                 },
                 {
                     "role": "user",
-                    "content": f" This is a word in arabic,explain the meaning of this word and give 3 examples of it context: {my_word}",
+                    "content": f" This is a word in arabic or english ,explain the meaning of this word in english and give 3 examples of it context: {my_word}",
                 },
             ]
         )

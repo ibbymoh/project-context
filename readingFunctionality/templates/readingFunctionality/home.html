@@ -1,52 +1,65 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% load static %}
+
+    <link href="{% static 'design/style.css' %}" rel="stylesheet"/>
 
 
+</head>
 
-{% block content %}
+<body>
 
+<nav class="navbar">
+    <div class="container-fluid justify-content-center">
+        <nav class="navbar  me-auto">
+            <a href="{% url 'home' %}" id="logo">
+                cXntext
 
-<div class="container h-100 align-items-center">
-  <div class="row">
-    <div class="col-md-3 no-float ">
-      <a class="font-weight-bold text-primary" href="{% url 'guide' %}"> How it works?  </a>
-
-        <select class="form-select w-100" name="language-choice" id="language-choice">
-          <option value="English">English</option>
-          <option value="Arabic">Arabic</option>
-        </select>
-        <label for="language-choice" >Choose Langauge of text</label>
-
-      <div class="row" id="upload-section">
-
-        <input type="file" id="actual-btn" hidden />
-          {% csrf_token %}
-        <label for="actual-btn" id="uploadButton" class="btn btn-dark">Upload</label>
+            </a>
+        </nav>
 
 
-      </div>
-
-        <label for="pageNumber">Page number</label>
-        <input type="text" id="pageNumber" name="fname">
-        <button type="button" id="previousPage" class="btn btn-dark">Previous Page </button>
-        <button type="button" id="nextPage" class="btn btn-dark">Next Page </button> <br>
-        <button type="button" id="loadText" class="btn btn-dark">Load Text</button>
-
-      <div class="row" id="translation-section">
-          <h1 id="word"> </h1>
-          <p id="translation-of-Word"> </p>
-      </div>
-
-<!--      <div class="row" id="upload-section">-->
-<!--        <button type="button" class="btn btn-dark" id="saveWordButton" hidden>Save word</button>-->
-<!--      </div>-->
-
-    </div>
-
-    <div class="col-md-9 no-float overflow-auto" id="textSection">
+      <ul class="nav align-items-center">
+          <li class="nav-item">
+              <a class="nav-link text-dark" href="{% url 'upload-text' %}" > Upload Text </a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link text-dark" href="{% url 'upload-doc' %}" > Upload PDF </a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}" hidden> <button type="button" class="btn btn-dark">Logout</button></a>
+          </li>
+      </ul>
 
     </div>
+</nav>
 
+<div class="container" id="home-page-container">
+  <div class="row" style="margin-right: 0px, margin-left:0px">
+    <a href="{% url 'upload-text' %}"><button type="button" class="btn btn-dark" style="width: 300px;height: 20%;">  Upload text </button> </a>
+  </div>
+  <div class="row" style="margin-right: 0px, margin-left:0px">
+    <a href="{% url 'upload-doc' %}"> <button type="button" class="btn btn-dark" style="width: 300px;height: 20%;">  Upload document </button> </a>
   </div>
 </div>
 
-{% endblock %}
+<script type="text/javascript" src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main.js' %}"> </script>
+</body>
+
+<footer>
+    <div >
+      <span id="footer-company-sign">© 2023 cXntext </span>
+    </div>
+</footer>
+
+
+</html>

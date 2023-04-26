@@ -53,7 +53,7 @@ $('#actual-btn').change(function() {
 
         } else if (language_choice == "English") {
 
-        $('#textSection ').css('direction','ltr')
+        $('#textSection').css('direction','ltr')
     }
 
     const myArray = data["alpha"]
@@ -93,6 +93,29 @@ $('#actual-btn').change(function() {
         })
 
     });
+
+    //###
+
+        $('#tranformedText').on('click','.textButton', function(event) {
+        chosen_word = ($(event.currentTarget).text())
+        $('#word-to-translate').text(chosen_word)
+
+        $('#translation-text-upload').text('')
+        $.ajax({
+
+        type: 'GET',
+        url: 'get/translation',
+        data: {"word-choice": chosen_word},
+        success: function(response) {
+        $('#translation-text-upload').text(response['answer'])
+
+        }
+
+
+        })
+
+    });
+
 
 //    #######
 
@@ -300,10 +323,28 @@ $('#nextPage').click(function(event) {
 
     }
 
-    })
+    });
 
 
+$('#seperateText').click(function() {
+    $('#tranformedText').empty()
 
+    my_text = $('#textInputSection').val().trim().split(" ")
+
+    for (let i=0; i < my_text.length; i++ ) {
+    $('#tranformedText').append(`<button type='button' class='textButton'>${my_text[i]}</button>`)
+    $('#tranformedText').append(" ")
+
+    }
+    $('.textButton').addClass('btn btn-light')
+
+});
+
+
+$('#resetTextButton').click(function() {
+    $('#textInputSection').val('')
+    $('#tranformedText').empty()
+})
 
 
 });

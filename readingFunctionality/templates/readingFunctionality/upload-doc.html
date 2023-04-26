@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+
+<div class="container h-100 align-items-center">
+  <div class="row" id="main-row">
+    <div class="col-md-3 float ">
+      <a class="font-weight-bold text-primary" href="{% url 'guide' %}"> How it works?  </a>
+
+        <select class="form-select w-100" name="language-choice" id="language-choice">
+          <option value="English">English</option>
+          <option value="Arabic">Arabic</option>
+        </select>
+        <label for="language-choice" >Choose Langauge of text</label>
+
+      <div class="row" id="upload-section">
+
+        <input type="file" id="actual-btn" hidden />
+          {% csrf_token %}
+        <label for="actual-btn" id="uploadButton" class="btn btn-dark">Upload</label>
+
+
+      </div>
+
+        <label for="pageNumber">Page number</label>
+        <input type="text" id="pageNumber" name="fname">
+        <button type="button" id="previousPage" class="btn btn-dark">Previous Page </button>
+        <button type="button" id="nextPage" class="btn btn-dark">Next Page </button> <br>
+        <button type="button" id="loadText" class="btn btn-dark">Load Text</button>
+
+
+    </div>
+
+    <div class="col-md-9" id="textSection">
+
+    </div>
+
+  </div>
+
+   <div class="row" id="translation-section">
+          <h1 id="word"> </h1>
+          <p id="translation-of-Word"> </p>
+   </div>
+
+</div>
+
+{% endblock %}

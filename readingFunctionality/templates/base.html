@@ -15,33 +15,29 @@
 
 </head>
 
-
-<body class="bg-white">
+<body>
 
 <nav class="navbar">
     <div class="container-fluid justify-content-center">
-        <nav class="navbar navbar-white bg-white me-auto">
-            <a class="navbar-brand" href="{% url 'home' %}">
-                <img src="{% static 'design/logo.png' %}" width="130" height="130" class="d-inline-block" alt="">
+        <nav class="navbar  me-auto">
+            <a href="{% url 'home' %}" id="logo">
+<!--                <img src="{% static 'design/logo.png' %}" width="150" height="150" class="d-inline-block" alt="">-->
+                cXntext
 
             </a>
         </nav>
 
+
       <ul class="nav align-items-center">
-
-
           <li class="nav-item">
-              <a class="nav-link text-dark" href="{% url 'logout' %}" hidden> Item one</a>
+              <a class="nav-link text-dark" href="{% url 'upload-doc' %}" > Upload Document</a>
           </li>
-
           <li class="nav-item">
-              <a class="nav-link text-dark" href="{% url 'logout' %}" hidden> Item two </a>
+              <a class="nav-link text-dark" href="{% url 'upload-text' %}" > Upload Text </a>
           </li>
-
           <li class="nav-item">
               <a class="nav-link" href="{% url 'logout' %}" hidden> <button type="button" class="btn btn-dark">Logout</button></a>
           </li>
-
       </ul>
 
     </div>
@@ -51,7 +47,16 @@
 
 {% endblock %}
 
+
 <script type="text/javascript" src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main.js' %}"> </script>
 </body>
+
+
+<footer>
+    <div >
+      <span>© 2023 cXntext </span>
+    </div>
+</footer>
+
 </html>

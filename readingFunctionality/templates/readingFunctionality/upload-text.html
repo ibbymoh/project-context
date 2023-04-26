@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block content %}
+
+
+<div class="container h-100 align-items-center">
+  <div class="row" id="uploadTextRow">
+    <div class="col-md-3 float ">
+
+        <select class="form-select w-100" name="language-choice" id="language-choice-text-upload">
+          <option value="English">English</option>
+          <option value="Arabic">Arabic</option>
+        </select>
+        <label for="language-choice" >Choose Langauge of text</label>
+
+      <div class="row" id="uploadTextSection">
+          <button type="button" id="seperateText" class="btn btn-dark">Seperate Text</button>
+          <button type="button" id="resetTextButton" class="btn btn-dark">Reset</button>
+      </div>
+
+
+
+    </div>
+
+      <div class="col-md-9">
+          <div class="row" style="display: contents;">
+              <textarea placeholder="paste text" type="text" id="textInputSection" name="textInputSection" class="col-md-9" > </textarea>
+          </div>
+          <div class="row" style="display:contents">
+             <div class="col-md-9" id="tranformedText">
+             </div>
+          </div>
+      </div>
+  </div>
+
+    <div class="row" id="translation-section-text">
+          <h1 id="word-to-translate"> </h1>
+          <p id="translation-text-upload"> </p>
+      </div>
+
+</div>
+
+
+{% endblock %}
