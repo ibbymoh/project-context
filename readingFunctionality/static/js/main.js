@@ -84,7 +84,7 @@ $('#actual-btn').change(function() {
 
         type: 'GET',
         url: 'upload-doc/get/translation',
-        data: {"word-choice": chosen_word, "language": language_choice},
+        data: {"word-choice": chosen_word,"language": language_choice},
         success: function(response) {
         $('#translation-of-Word').text(response['answer'])
 
