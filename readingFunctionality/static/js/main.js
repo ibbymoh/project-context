@@ -47,7 +47,7 @@ $('#actual-btn').change(function() {
     contentType: false,
     success: function(data) {
 
-       if (language_choice == "Arabic") {
+       if (language_choice == "Arabic" || language_choice == "Syriac") {
 
         $('#textSection').css('direction','rtl')
 
@@ -60,7 +60,7 @@ $('#actual-btn').change(function() {
 
     for (let i = 0; i < myArray.length; i++) {
         $('#textSection').append(`<button type='button' class='textButton'>${myArray[i]}</button>`)
-        $('#textSection').append(" ")
+
         }
 
     $('.textButton').addClass('btn btn-light')
@@ -77,14 +77,14 @@ $('#actual-btn').change(function() {
     $('#textSection').on('click','.textButton', function(event) {
         chosen_word = ($(event.currentTarget).text())
         $('#word').text(chosen_word)
-
+        language_choice = $('#language-choice').val()
 
         $('#translation-of-Word').text('')
         $.ajax({
 
         type: 'GET',
         url: 'upload-doc/get/translation',
-        data: {"word-choice": chosen_word},
+        data: {"word-choice": chosen_word, "language": language_choice},
         success: function(response) {
         $('#translation-of-Word').text(response['answer'])
 
@@ -101,13 +101,14 @@ $('#actual-btn').change(function() {
         chosen_word = $(event.currentTarget).text()
         console.log(chosen_word)
         $('#word-to-translate').text(chosen_word)
+        language_choice = $('#language-choice-text-upload').val()
 //
         $('#translation-text-upload').text('')
         $.ajax({
 
         type: 'GET',
         url: 'upload-text/get/translation',
-        data: {"word-choice": chosen_word},
+        data: {"word-choice": chosen_word, "language": language_choice},
         success: function(response) {
         $('#translation-text-upload').text(response['answer'])
 
@@ -149,7 +150,7 @@ $('#loadText').click(function(event) {
         processData: false,
         contentType: false,
         success: function(data) {
-           if (language_choice == "Arabic") {
+           if (language_choice == "Arabic" || language_choice == "Syriac") {
 
             $('#textSection').css('direction','rtl')
 
@@ -162,7 +163,7 @@ $('#loadText').click(function(event) {
 
         for (let i = 0; i < myArray.length; i++) {
             $('#textSection').append(`<button type='button' class='textButton'>${myArray[i]}</button>`)
-            $('#textSection').append(" ")
+
             }
 
         $('.textButton').addClass('btn btn-light')
@@ -217,7 +218,7 @@ $('#previousPage').click(function(event) {
         contentType: false,
         success: function(data) {
 
-          if (language_choice == "Arabic") {
+          if (language_choice == "Arabic" || language_choice == "Syriac") {
 
             $('#textSection').css('direction','rtl')
 
@@ -228,17 +229,12 @@ $('#previousPage').click(function(event) {
 
         const myArray = data["alpha"]
 
-        if (language_choice == "Arabic") {
-            $('#textSection').css('direction','rtl')
-        } else if (language_choice == "Arabic") {
-            $('#textSection').css('direction','ltr')
-        }
 
 
 
         for (let i = 0; i < myArray.length; i++) {
             $('#textSection').append(`<button type='button' class='textButton'>${myArray[i]}</button>`)
-            $('#textSection').append(" ")
+
             }
 
         $('.textButton').addClass('btn btn-light')
@@ -290,7 +286,7 @@ $('#nextPage').click(function(event) {
         contentType: false,
         success: function(data) {
 
-          if (language_choice == "Arabic") {
+          if (language_choice == "Arabic" || language_choice == "Syriac") {
 
             $('#textSection').css('direction','rtl')
 
@@ -303,7 +299,7 @@ $('#nextPage').click(function(event) {
 
         for (let i = 0; i < myArray.length; i++) {
             $('#textSection').append(`<button type='button' class='textButton'>${myArray[i]}</button>`)
-            $('#textSection').append(" ")
+
             }
 
         $('.textButton').addClass('btn btn-light')
@@ -332,8 +328,9 @@ $('#nextPage').click(function(event) {
 
 $('#seperateText').click(function() {
     $('#tranformedText').empty()
+    language_choice = $('#language-choice-text-upload').val()
 
-     if ( $('#language-choice-text-upload').val() == "Arabic") {
+     if ( language_choice == "Arabic" || language_choice == "Syriac") {
 
         $('#tranformedText').css('direction','rtl');
 
@@ -346,7 +343,7 @@ $('#seperateText').click(function() {
 
     for (let i=0; i < my_text.length; i++ ) {
     $('#tranformedText').append(`<button type='button' class='textButton'>${my_text[i]}</button>`)
-    $('#tranformedText').append(" ")
+
 
     }
     $('.textButton').addClass('btn btn-light')

@@ -53,6 +53,9 @@ def fileChange(request):
             ocr_text = pytesseract.image_to_string(images[0], lang='ara')
         elif language == "English":
             ocr_text = pytesseract.image_to_string(images[0], lang='eng')
+        elif language == "Syriac":
+            ocr_text = pytesseract.image_to_string(images[0], lang='syr')
+
 
         array = ocr_text.split()
         return JsonResponse({"alpha":array})
@@ -60,6 +63,7 @@ def fileChange(request):
 def translate(request):
     if request.method == "GET":
         my_word = request.GET['word-choice']
+        language = request.GET['language']
         openai.api_key = settings.OPENAI_API_KEY
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -71,7 +75,7 @@ def translate(request):
                 },
                 {
                     "role": "user",
-                    "content": f" This is a word in arabic or english ,explain the meaning of this word in english and give 3 examples of it context: {my_word}",
+                    "content": f" This is a word in {language},explain the meaning of this word in english and give 3 examples of it context: {my_word}",
                 },
             ]
         )
