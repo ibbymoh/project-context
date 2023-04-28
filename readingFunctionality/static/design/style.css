@@ -122,6 +122,9 @@ border-radius: 40px;
     margin-top: 5px;
     margin-bottom: 5px;
     font-size: 20px;
+    padding-left: 2px;
+    padding-right: 2px;
+    border-radius: 0px;
 
   }
 
@@ -180,6 +183,11 @@ footer {
     margin-bottom: 10px;
 }
 
+#pageNumber {
+
+    width:15%;
+    margin-right: 20px;
+}
 
 #home-page-container {
 
@@ -188,5 +196,10 @@ footer {
     display: grid;
 
 }
+
+ #home-page-container > .row  {
+    display: block;
+ }
+
 
 }
