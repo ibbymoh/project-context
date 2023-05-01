@@ -79,18 +79,27 @@ $('#actual-btn').change(function() {
         $('#word').text(chosen_word)
         language_choice = $('#language-choice').val()
 
+
         $('#translation-of-Word').text('')
         $.ajax({
 
         type: 'GET',
         url: 'upload-doc/get/translation',
-        data: {"word-choice": chosen_word,"language": language_choice},
+        data: {"word-choice": chosen_word,"language": language_choice,"sentence":chosen_word},
         success: function(response) {
-        $('#translation-of-Word').text(response['answer'])
+        const re = /\d\D+/gu
+        contextual_examples = response['answer'].match(re)
+        $('#translation-of-word').append(response['answer'].split('1.')[0])
+
+        for (i=0; i < contextual_examples.length; i++) {
+        $('#translation-of-word').append("<br /><br />")
+        $('#translation-of-word').append(contextual_examples[i])
 
         }
 
 
+
+        }
         })
 
     });
@@ -100,17 +109,33 @@ $('#actual-btn').change(function() {
     $('#tranformedText').on('click','.textButton', function(event) {
         chosen_word = $(event.currentTarget).text()
         console.log(chosen_word)
+
         $('#word-to-translate').text(chosen_word)
         language_choice = $('#language-choice-text-upload').val()
-//
+        sentence = $('#textInputSection').val()
         $('#translation-text-upload').text('')
-        $.ajax({
+        $.ajax ({
 
         type: 'GET',
         url: 'upload-text/get/translation',
-        data: {"word-choice": chosen_word, "language": language_choice},
+        data: {"word-choice": chosen_word, "language": language_choice,"sentence": sentence},
+        dataType: "json",
         success: function(response) {
-        $('#translation-text-upload').text(response['answer'])
+
+
+        const re = /\d\D+/gu
+        contextual_examples = response['answer'].match(re)
+        $('#translation-text-upload').append(response['answer'].split('1.')[0])
+
+        for (i=0; i < contextual_examples.length; i++) {
+        $('#translation-text-upload').append("<br /><br />")
+        $('#translation-text-upload').append(contextual_examples[i])
+
+        }
+
+        $('#translation-text-upload').append("<h1> Position in sentence  </h1>")
+        $('#translation-text-upload').append(response['position'])
+
 
         }
 
@@ -121,7 +146,6 @@ $('#actual-btn').change(function() {
 
 
 //    #######
-
 
 
 $('#loadText').click(function(event) {
@@ -350,13 +374,9 @@ $('#seperateText').click(function() {
 
 });
 
-
 $('#resetTextButton').click(function() {
     $('#textInputSection').val('')
     $('#tranformedText').empty()
 });
-
-
-
 
 });

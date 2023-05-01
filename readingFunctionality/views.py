@@ -14,6 +14,13 @@ import pytesseract
 from pdf2image import convert_from_path, convert_from_bytes
 from django.conf import settings
 import openai
+import camel_tools
+from camel_tools.utils.dediac import dediac_ar
+from camel_tools.utils.normalize import normalize_alef_maksura_ar
+from camel_tools.utils.normalize import normalize_alef_ar
+from camel_tools.utils.normalize import normalize_teh_marbuta_ar
+from camel_tools.tokenizers.word import simple_word_tokenize
+from camel_tools.disambig.mle import MLEDisambiguator
 
 
 # Create your views here.
@@ -26,12 +33,18 @@ poppler_path = os.getenv("POPPLER_PATH")
 def home(request):
     return render(request,'readingFunctionality/home.html')
 
+
+
 def upload_text(request):
     return render(request,'readingFunctionality/upload-text.html')
 
 
+
+
 def upload_doc(request):
     return render(request,'readingFunctionality/upload-doc.html')
+
+
 
 
 def fileChange(request):
@@ -60,10 +73,50 @@ def fileChange(request):
         array = ocr_text.split()
         return JsonResponse({"alpha":array})
 
+
+
+def ortho_normalize(text):
+    text = normalize_alef_maksura_ar(text)
+    text = normalize_alef_ar(text)
+    text = normalize_teh_marbuta_ar(text)
+    return text
+
+
+
+def breakdown_grammar(text):
+    #step 1 remove the diacritics
+    text = dediac_ar(text)
+
+    #step 2 orthornormalise the text
+    text = ortho_normalize(text)
+
+    #step 3 split word into tokens
+    text = simple_word_tokenize(text)
+
+    #step 4 morphological disambiguator
+    mle = MLEDisambiguator.pretrained()
+    disambig = mle.disambiguate(text)
+    pos_tags = [d.analyses[0].analysis['pos'] for d in disambig]
+    original_words = [d.word for d in disambig]
+    root_letters = [d.analyses[0].analysis['root'] for d in disambig]
+
+    dictionary = {}
+
+    for i in range(len(original_words)):
+        seperated_word = list(original_words[i])
+        print(tuple(seperated_word))
+        dictionary[tuple(seperated_word)] = pos_tags[i]
+        # dictionary[tuple(seperated_word)] = root_letters[i]
+
+    return dictionary
+
+
 def translate(request):
     if request.method == "GET":
         my_word = request.GET['word-choice']
+        print(my_word)
         language = request.GET['language']
+        sentence = request.GET['sentence']
         openai.api_key = settings.OPENAI_API_KEY
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -81,7 +134,19 @@ def translate(request):
         )
         result = response["choices"][0]["message"]["content"]
 
-        return JsonResponse({"answer": result})
+        try:
+            my_word = ortho_normalize(my_word)
+            my_word = list(my_word)
+            return JsonResponse({ "answer": result, "position": breakdown_grammar(sentence)[tuple(my_word)]})
+        except KeyError:
+            my_word = ortho_normalize(my_word)
+            my_word = list(my_word)[::-1]
+            return JsonResponse({"answer": result, "position": breakdown_grammar(sentence)[tuple(my_word)]})
+
+
+
+####### - arabic section
+#  This section reduces orthographic ambiguity (the extent to which the spelling of words and form of characters changes based on context)
 
 
 def view_guide(request):
