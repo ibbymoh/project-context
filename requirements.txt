@@ -47,4 +47,4 @@ urllib3==1.26.12
 wasabi==1.1.1
 whitenoise==6.4.0
 camel-tools
-camel_data -i all 
+camel_data
