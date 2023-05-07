@@ -15,6 +15,9 @@ from pdf2image import convert_from_path, convert_from_bytes
 from django.conf import settings
 import openai
 
+# Create your views here.
+# pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+# poppler_path = r"C:\Users\User\Downloads\Release-23.01.0-0\poppler-23.01.0\Library\bin"
 pytesseract.pytesseract.tesseract_cmd = '/app/.apt/usr/bin/tesseract'
 poppler_path = os.getenv("POPPLER_PATH")
 
@@ -128,12 +131,6 @@ def translate(request):
         except KeyError:
 
             return JsonResponse({"answer": result, "position": "noun"})
-
-
-
-####### - arabic section
-#  This section reduces orthographic ambiguity (the extent to which the spelling of words and form of characters changes based on context)
-
 
 def view_guide(request):
     return render(request,"readingFunctionality/guide.html")
