@@ -14,18 +14,7 @@ import pytesseract
 from pdf2image import convert_from_path, convert_from_bytes
 from django.conf import settings
 import openai
-# import camel_tools
-# from camel_tools.utils.dediac import dediac_ar
-# from camel_tools.utils.normalize import normalize_alef_maksura_ar
-# from camel_tools.utils.normalize import normalize_alef_ar
-# from camel_tools.utils.normalize import normalize_teh_marbuta_ar
-# from camel_tools.tokenizers.word import simple_word_tokenize
-# from camel_tools.disambig.mle import MLEDisambiguator
 
-
-# Create your views here.
-# pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-# poppler_path = r"C:\Users\User\Downloads\Release-23.01.0-0\poppler-23.01.0\Library\bin"
 pytesseract.pytesseract.tesseract_cmd = '/app/.apt/usr/bin/tesseract'
 poppler_path = os.getenv("POPPLER_PATH")
 
@@ -137,7 +126,7 @@ def translate(request):
         try:
             return JsonResponse({ "answer": result, "position": "noun"})
         except KeyError:
-         
+
             return JsonResponse({"answer": result, "position": "noun"})
 
 
