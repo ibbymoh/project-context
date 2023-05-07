@@ -6,7 +6,7 @@ attrs==22.2.0
 beautifulsoup4==4.12.1
 blis==0.7.9
 cachetools==5.3.0
-camel-tools==1.5.2
+camel-tools
 catalogue==2.0.8
 certifi==2022.12.7
 charset-normalizer==3.1.0
