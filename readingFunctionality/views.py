@@ -108,7 +108,6 @@ def translate(request):
         my_word = request.GET['word-choice']
         print(my_word)
         language = request.GET['language']
-        sentence = request.GET['sentence']
         openai.api_key = settings.OPENAI_API_KEY
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -125,7 +124,6 @@ def translate(request):
             ]
         )
         result = response["choices"][0]["message"]["content"]
-
         try:
             return JsonResponse({ "answer": result, "position": "noun"})
         except KeyError:
