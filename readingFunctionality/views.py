@@ -106,7 +106,6 @@ def fileChange(request):
 def translate(request):
     if request.method == "GET":
         my_word = request.GET['word-choice']
-        print(my_word)
         language = request.GET['language']
         openai.api_key = settings.OPENAI_API_KEY
         response = openai.ChatCompletion.create(
@@ -124,11 +123,8 @@ def translate(request):
             ]
         )
         result = response["choices"][0]["message"]["content"]
-        try:
-            return JsonResponse({ "answer": result, "position": "noun"})
-        except KeyError:
 
-            return JsonResponse({"answer": result, "position": "noun"})
+        return JsonResponse({ "answer": result, "position": "noun"})
 
 def view_guide(request):
     return render(request,"readingFunctionality/guide.html")
